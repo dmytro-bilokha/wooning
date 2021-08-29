@@ -8,8 +8,14 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-	<application.bootstrapClass>com.dmytrobilokha.wooning.ReportJob</application.bootstrapClass>
-	<logback.version>1.2.5</logback.version>
+
+        <application.bootstrapClass>com.dmytrobilokha.wooning.ReportJob</application.bootstrapClass>
+
+        <logback.version>1.2.5</logback.version>
+        <opencsv.version>5.5.1</opencsv.version>
+        <apache.lang.version>3.12.0</apache.lang.version>
+        <apache.math.version>3.6.1</apache.math.version>
+
         <testng.version>7.4.0</testng.version>
         <mockito.version>3.12.4</mockito.version>
 
@@ -21,7 +27,7 @@
         <maven.spotbugs.plugin.version>4.0.4</maven.spotbugs.plugin.version>
         <maven.enforcer.plugin.version>3.0.0-M3</maven.enforcer.plugin.version>
         <maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
-	<maven.assembly.plugin.version>3.3.0</maven.assembly.plugin.version>
+        <maven.assembly.plugin.version>3.3.0</maven.assembly.plugin.version>
         <maven.dependency.plugin.version>3.1.2</maven.dependency.plugin.version>
         <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
         <maven.clean.plugin.version>3.1.0</maven.clean.plugin.version>
@@ -33,11 +39,22 @@
     </properties>
 
     <dependencies>
-	<dependency>
-	    <groupId>ch.qos.logback</groupId>
-	    <artifactId>logback-classic</artifactId>
-	    <version>${logback.version}</version>
-	</dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>${opencsv.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>${apache.math.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -51,6 +68,17 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- This helps to avoid OpenCSV using two different versions of lang transitive dependency -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.lang.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -138,7 +166,7 @@
                     </execution>
                 </executions>
             </plugin>
-	                <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${maven.jar.plugin.version}</version>

@@ -33,10 +33,8 @@ public final class ReportJob {
             LOG.error("Failed to open the file '{}'", fileName, e);
             System.exit(2);
         }
-        rawLines.stream()
-                .filter(rl -> rl.getAddress() != null && rl.getAddress().trim().length() > 0)
-                .filter(rl -> !"?".equals(rl.getReservationDate()))
-                .forEach(rl -> System.out.println(rl.toString()));
+        ParsingUtil.parseHousingData(rawLines)
+                .forEach(ho -> System.out.println(ho.toString()));
     }
 
 }

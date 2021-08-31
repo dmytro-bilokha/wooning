@@ -99,4 +99,19 @@ public class HousingObject {
         HOUSE, TOWN_HOUSE, FLAT
     }
 
+    @Override
+    public String toString() {
+        return "HousingObject{"
+                + "address='" + address + '\''
+                + ", type=" + type
+                + ", volume=" + volume
+                + ", livingArea=" + livingArea
+                + ", numberOfRooms=" + numberOfRooms
+                + ", yearOfConstruction=" + yearOfConstruction
+                + ", hasElevator=" + hasElevator
+                + ", askingPrice=" + askingPrice
+                + ", listingDate=" + listingDate
+                + ", reservationDate=" + reservationDate
+                + '}';
+    }
 }

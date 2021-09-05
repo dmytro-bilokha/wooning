@@ -26,12 +26,13 @@ public final class ParsingUtil {
     public static List<HousingObject> parseHousingData(List<RawHousingData> housingDataItems) {
         var result = new ArrayList<HousingObject>();
         for (int i = 0; i < housingDataItems.size(); i++) {
+            var lineNumber = i + CSV_LINE_SHIFT;
             var housingData = housingDataItems.get(i);
             if (!shouldIgnore(housingData)) {
                 try {
-                    result.add(parse(housingData));
+                    result.add(parse(housingData, lineNumber));
                 } catch (RuntimeException e) {
-                    LOG.error("Failed to parse {} in position {}", housingData, i + CSV_LINE_SHIFT, e);
+                    LOG.error("Failed to parse {} line {}", housingData, lineNumber, e);
                 }
             }
         }
@@ -44,8 +45,9 @@ public final class ParsingUtil {
                 || "Lost".equalsIgnoreCase(housingData.getReservationDate().strip());
     }
 
-    private static HousingObject parse(RawHousingData housingData) {
+    private static HousingObject parse(RawHousingData housingData, int lineNumber) {
         var housingObject = new HousingObject();
+        housingObject.setLineNumber(lineNumber);
         housingObject.setAddress(housingData.getAddress());
         housingObject.setAskingPrice(Integer.parseInt(housingData.getAskingPrice()));
         housingObject.setHasElevator("1".equals(housingData.getElevatorPresence().strip()));

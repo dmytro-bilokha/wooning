@@ -1,9 +1,11 @@
 package com.dmytrobilokha.wooning;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class HousingObject {
 
+    private int lineNumber;
     private String address;
     private Type type;
     private int volume;
@@ -14,6 +16,14 @@ public class HousingObject {
     private int askingPrice;
     private LocalDate listingDate;
     private LocalDate reservationDate;
+
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
+    }
 
     public String getAddress() {
         return address;
@@ -63,7 +73,7 @@ public class HousingObject {
         this.yearOfConstruction = yearOfConstruction;
     }
 
-    public boolean isHasElevator() {
+    public boolean hasElevator() {
         return hasElevator;
     }
 
@@ -95,14 +105,28 @@ public class HousingObject {
         this.reservationDate = reservationDate;
     }
 
-    public enum Type {
-        HOUSE, TOWN_HOUSE, FLAT
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        HousingObject that = (HousingObject) o;
+        return lineNumber == that.lineNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lineNumber);
     }
 
     @Override
     public String toString() {
         return "HousingObject{"
-                + "address='" + address + '\''
+                + "lineNumber=" + lineNumber
+                + ", address='" + address + '\''
                 + ", type=" + type
                 + ", volume=" + volume
                 + ", livingArea=" + livingArea
@@ -114,4 +138,9 @@ public class HousingObject {
                 + ", reservationDate=" + reservationDate
                 + '}';
     }
+
+    public enum Type {
+        HOUSE, TOWN_HOUSE, FLAT
+    }
+
 }
